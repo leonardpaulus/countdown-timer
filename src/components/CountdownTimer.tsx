@@ -9,11 +9,11 @@ interface CountdownTimerProps {
 
 const CountdownTimer = ({ year, month, day }: CountdownTimerProps) => {
   const [seconds, setSeconds] = useState<string>("");
-  const [minutes, setMinutes] = useState("");
-  const [hours, setHours] = useState("");
-  const [days, setDays] = useState("");
-  const [months, setMonths] = useState("");
-  const [years, setYears] = useState("");
+  const [minutes, setMinutes] = useState<string>("");
+  const [hours, setHours] = useState<string>("");
+  const [days, setDays] = useState<string>("");
+  const [months, setMonths] = useState<string>("");
+  const [years, setYears] = useState<string>("");
 
   useEffect(() => {
     setInterval(() => {
