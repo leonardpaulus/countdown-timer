@@ -5,9 +5,21 @@ interface CountdownTimerProps {
   year: number;
   month: number;
   day: number;
+  hour?: number;
+  minute?: number;
+  second?: number;
+  timeZone: number;
 }
 
-const CountdownTimer = ({ year, month, day }: CountdownTimerProps) => {
+const CountdownTimer = ({
+  year,
+  month,
+  day,
+  hour = 0,
+  minute = 0,
+  second = 0,
+  timeZone = 0,
+}: CountdownTimerProps) => {
   const [seconds, setSeconds] = useState<string>("");
   const [minutes, setMinutes] = useState<string>("");
   const [hours, setHours] = useState<string>("");
@@ -15,14 +27,21 @@ const CountdownTimer = ({ year, month, day }: CountdownTimerProps) => {
   const [months, setMonths] = useState<string>("");
   const [years, setYears] = useState<string>("");
 
+  const getFormattedDate = () => {
+    const composedDate = `${year}-${month}-${day}`;
+    const pastDate = new Date(composedDate).setHours(
+      hour + timeZone,
+      minute,
+      second
+    );
+    return pastDate.valueOf();
+  };
+
   useEffect(() => {
     setInterval(() => {
-      const composedDate = `${year}-${month}-${day}`;
-
-      const pastDate = new Date(composedDate).getTime().valueOf();
       const today = new Date().valueOf();
 
-      const timeDiff = Math.abs((today - pastDate).valueOf());
+      const timeDiff = Math.abs((today - getFormattedDate()).valueOf());
 
       let seconds = Math.floor(timeDiff / 1000);
       let minutes = Math.floor(seconds / 60);
@@ -54,14 +73,18 @@ const CountdownTimer = ({ year, month, day }: CountdownTimerProps) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.digits}>
-        <span>{`${years}`}</span>
-        <span>Years</span>
-      </div>
-      <div className={styles.digits}>
-        <span>{`${months}`}</span>
-        <span>Months</span>
-      </div>
+      {years !== "00" ? (
+        <div className={styles.digits}>
+          <span>{`${years}`}</span>
+          <span>Years</span>
+        </div>
+      ) : null}
+      {months !== "00" ? (
+        <div className={styles.digits}>
+          <span>{`${months}`}</span>
+          <span>Months</span>
+        </div>
+      ) : null}
       <div className={styles.digits}>
         <span>{`${days}`}</span>
         <span>Days</span>
