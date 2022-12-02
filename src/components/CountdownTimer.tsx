@@ -1,19 +1,36 @@
 import { useEffect, useState } from "react";
 
-const CountdownTimer = () => {
+interface CountdownTimerProps {
+  year: number;
+  month: number;
+  day: number;
+}
+
+const CountdownTimer = ({ year, month, day }: CountdownTimerProps) => {
   const [countDown, setCountDown] = useState<string>("");
 
   useEffect(() => {
     setInterval(() => {
-      const futureDate = new Date(new Date().getFullYear() + 1, 0, 1).valueOf();
+      const composedDate = `${year}-${month}-${day}`;
+
+      const pastDate = new Date(composedDate).getTime().valueOf();
+      //   const futureDate = new Date(new Date().getFullYear() + 1, 0, 1).valueOf();
       const today = new Date().valueOf();
 
-      const timeDiff = Math.abs(today - futureDate).valueOf();
+      const timeDiff = Math.abs((today - pastDate).valueOf());
 
-      const days = timeDiff / (24 * 60 * 60 * 1000);
-      const hours = (days % 1) * 24;
-      const minutes = (hours % 1) * 60;
-      const seconds = (minutes % 1) * 60;
+      let seconds = Math.floor(timeDiff / 1000);
+      let minutes = Math.floor(seconds / 60);
+      let hours = Math.floor(minutes / 60);
+      let days = Math.floor(hours / 24);
+      let months = Math.floor(days / 30);
+      let years = Math.floor(days / 365);
+
+      seconds %= 60;
+      minutes %= 60;
+      hours %= 24;
+      days %= 30;
+      months %= 12;
 
       const addLeadingZeros = (date: number) => {
         return `${Math.floor(date)}`.length < 2
@@ -21,9 +38,11 @@ const CountdownTimer = () => {
           : `${Math.floor(date)}`;
       };
 
-      const countDownToSet = `${addLeadingZeros(days)} : ${addLeadingZeros(
-        minutes
-      )} : ${addLeadingZeros(hours)} : ${addLeadingZeros(seconds)}`;
+      const countDownToSet = `${addLeadingZeros(years)} : ${addLeadingZeros(
+        months
+      )} : ${addLeadingZeros(days)} : ${addLeadingZeros(
+        hours
+      )} : ${addLeadingZeros(minutes)} : ${addLeadingZeros(seconds)}`;
 
       setCountDown(countDownToSet);
     }, 1000);
