@@ -1,5 +1,5 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import CountdownTimer from "./components/CountdownTimer";
 import "./App.css";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello World</h1>
+      <CountdownTimer year={1995} month={1} day={12} />
     </div>
   );
 }
