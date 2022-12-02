@@ -1,0 +1,34 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.digits {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  & > span:nth-child(1) {
+    font-size: 100px;
+
+    &::after {
+      content: ":";
+      margin: 0 auto;
+      position: absolute;
+      display: inline;
+    }
+  }
+
+  &:nth-last-of-type(1) {
+    & > span:first-child::after {
+      content: "";
+    }
+  }
+
+  & > span:nth-child(2) {
+    width: 100%;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+  }
+}

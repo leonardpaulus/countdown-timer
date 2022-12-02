@@ -1,5 +1,4 @@
 import CountdownTimer from "./components/CountdownTimer";
-import "./App.css";
 
 function App() {
   return (

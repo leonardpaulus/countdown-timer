@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./CountdownTimer.module.scss";
 
 interface CountdownTimerProps {
   year: number;
@@ -7,14 +8,18 @@ interface CountdownTimerProps {
 }
 
 const CountdownTimer = ({ year, month, day }: CountdownTimerProps) => {
-  const [countDown, setCountDown] = useState<string>("");
+  const [seconds, setSeconds] = useState<string>("");
+  const [minutes, setMinutes] = useState("");
+  const [hours, setHours] = useState("");
+  const [days, setDays] = useState("");
+  const [months, setMonths] = useState("");
+  const [years, setYears] = useState("");
 
   useEffect(() => {
     setInterval(() => {
       const composedDate = `${year}-${month}-${day}`;
 
       const pastDate = new Date(composedDate).getTime().valueOf();
-      //   const futureDate = new Date(new Date().getFullYear() + 1, 0, 1).valueOf();
       const today = new Date().valueOf();
 
       const timeDiff = Math.abs((today - pastDate).valueOf());
@@ -38,17 +43,43 @@ const CountdownTimer = ({ year, month, day }: CountdownTimerProps) => {
           : `${Math.floor(date)}`;
       };
 
-      const countDownToSet = `${addLeadingZeros(years)} : ${addLeadingZeros(
-        months
-      )} : ${addLeadingZeros(days)} : ${addLeadingZeros(
-        hours
-      )} : ${addLeadingZeros(minutes)} : ${addLeadingZeros(seconds)}`;
-
-      setCountDown(countDownToSet);
+      setYears(`${addLeadingZeros(years)}`);
+      setMonths(`${addLeadingZeros(months)}`);
+      setDays(`${addLeadingZeros(days)}`);
+      setHours(`${addLeadingZeros(hours)}`);
+      setMinutes(`${addLeadingZeros(minutes)}`);
+      setSeconds(`${addLeadingZeros(seconds)}`);
     }, 1000);
   }, []);
 
-  return <h1>{countDown}</h1>;
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.digits}>
+        <span>{`${years}`}</span>
+        <span>Years</span>
+      </div>
+      <div className={styles.digits}>
+        <span>{`${months}`}</span>
+        <span>Months</span>
+      </div>
+      <div className={styles.digits}>
+        <span>{`${days}`}</span>
+        <span>Days</span>
+      </div>
+      <div className={styles.digits}>
+        <span>{`${hours}`}</span>
+        <span>Hours</span>
+      </div>
+      <div className={styles.digits}>
+        <span>{`${minutes}`}</span>
+        <span>Minutes</span>
+      </div>
+      <div className={styles.digits}>
+        <span>{`${seconds}`}</span>
+        <span>Seconds</span>
+      </div>
+    </div>
+  );
 };
 
 export default CountdownTimer;
