@@ -16,6 +16,7 @@
       margin: 0 auto;
       position: absolute;
       display: inline;
+      animation: blink 1s ease-in-out infinite;
     }
   }
 
@@ -30,5 +31,17 @@
     font-size: 20px;
     display: flex;
     justify-content: center;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
